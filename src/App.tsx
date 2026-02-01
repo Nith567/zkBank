@@ -237,8 +237,8 @@ function App() {
   const [pendingAmount, setPendingAmount] = useState<string>("0");
   const [isClaiming, setIsClaiming] = useState(false);
 
-  // Alchemy API for transaction history
-  const ALCHEMY_URL = "https://base-sepolia.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj0";
+  // Base Sepolia RPC endpoint
+  const BASE_SEPOLIA_RPC = "https://sepolia.base.org";
 
   // Load saved wallet data on mount
   useEffect(() => {
@@ -278,7 +278,7 @@ function App() {
     if (!email) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_URL);
+      const provider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
       const factoryContract = new ethers.Contract(FACTORY_ADDRESS, FactoryAbi, provider);
       
       const emailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(email));
@@ -319,7 +319,7 @@ function App() {
     if (!walletAddress) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_URL);
+      const provider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
       
       // USDC balance  
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, provider);
