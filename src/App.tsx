@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { primusProofTest, getFreshAttestation } from "./primus";
-import { Button, Typography, Alert, Card, Space, Divider, Tag, message, Input, InputNumber, Modal, List, Spin, Tooltip } from "antd";
+import { Button, Typography, Alert, Card, Space, Divider, Tag, message, Input, InputNumber, Modal } from "antd";
 import { JsonView } from "react-json-view-lite";
-import { CopyOutlined, WalletOutlined, CheckCircleOutlined, LogoutOutlined, DollarOutlined, BankOutlined, HistoryOutlined, ReloadOutlined, ArrowUpOutlined, ArrowDownOutlined, SendOutlined, GiftOutlined } from "@ant-design/icons";
+import { CopyOutlined, WalletOutlined, CheckCircleOutlined, LogoutOutlined, DollarOutlined, BankOutlined, SendOutlined, GiftOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ethers } from "ethers";
 
 const { Title, Text, Paragraph } = Typography;
@@ -220,10 +220,7 @@ function App() {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [allowance, setAllowance] = useState<string>("0");
   const [usdcBalance, setUsdcBalance] = useState<string>("0");
-  const [transactions, setTransactions] = useState<any[]>([]);
-  const [isLoadingTxHistory, setIsLoadingTxHistory] = useState(false);
-  const [walletEthBalance, setWalletEthBalance] = useState<string>("0.000");
-  const [walletUsdcBalance, setWalletUsdcBalance] = useState<string>("0.000");
+  const [walletUsdcBalance, setWalletUsdcBalance] = useState<string>("0.00");
 
   // Send to Email states
   const [sendModalOpen, setSendModalOpen] = useState(false);
@@ -259,12 +256,11 @@ function App() {
     }
   }, []);
 
-  // Fetch balances and transactions when wallet is set
+  // Fetch balances when wallet is set
   useEffect(() => {
     if (walletAddress) {
       fetchAaveBalance();
       fetchWalletBalances();
-      fetchTransactionHistory();
     }
   }, [walletAddress]);
 
@@ -323,107 +319,12 @@ function App() {
     try {
       const provider = new ethers.providers.JsonRpcProvider(ALCHEMY_URL);
       
-      // ETH balance
-      const ethBal = await provider.getBalance(walletAddress);
-      setWalletEthBalance(parseFloat(ethers.utils.formatEther(ethBal)).toFixed(4));
-      
       // USDC balance  
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, provider);
       const usdcBal = await usdcContract.balanceOf(walletAddress);
-      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 6)).toFixed(3));
+      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 6)).toFixed(2));
     } catch (e) {
       console.error("Failed to fetch wallet balances:", e);
-    }
-  };
-
-  // Fetch transaction history from Alchemy
-  const fetchTransactionHistory = async () => {
-    if (!walletAddress) return;
-    
-    setIsLoadingTxHistory(true);
-    try {
-      console.log("📜 Fetching transactions for:", walletAddress);
-      
-      // Get outgoing transfers
-      const outgoingResponse = await fetch(ALCHEMY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          id: 1,
-          method: 'alchemy_getAssetTransfers',
-          params: [{
-            fromBlock: '0x0',
-            toBlock: 'latest',
-            fromAddress: walletAddress,
-            category: ['external', 'internal', 'erc20'],
-            maxCount: '0x14',
-            order: 'desc',
-            withMetadata: true
-          }]
-        })
-      });
-      
-      // Get incoming transfers
-      const incomingResponse = await fetch(ALCHEMY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          id: 2,
-          method: 'alchemy_getAssetTransfers',
-          params: [{
-            fromBlock: '0x0',
-            toBlock: 'latest',
-            toAddress: walletAddress,
-            category: ['external', 'internal', 'erc20'],
-            maxCount: '0x14',
-            order: 'desc',
-            withMetadata: true
-          }]
-        })
-      });
-      
-      const outgoing = await outgoingResponse.json();
-      const incoming = await incomingResponse.json();
-      
-      console.log("📤 Outgoing txs:", outgoing.result?.transfers?.length || 0);
-      console.log("📥 Incoming txs:", incoming.result?.transfers?.length || 0);
-      
-      // Combine and sort by block number
-      let allTxs = [
-        ...(outgoing.result?.transfers || []).map((tx: any) => ({ ...tx, direction: 'out' })),
-        ...(incoming.result?.transfers || []).map((tx: any) => ({ ...tx, direction: 'in' }))
-      ].sort((a, b) => parseInt(b.blockNum, 16) - parseInt(a.blockNum, 16)).slice(0, 20);
-      
-      // If no Alchemy results, try BaseScan API as fallback
-      if (allTxs.length === 0) {
-        console.log("📜 Trying BaseScan API fallback...");
-        const basescanResponse = await fetch(
-          `https://api-sepolia.basescan.org/api?module=account&action=txlist&address=${walletAddress}&startblock=0&endblock=99999999&sort=desc`
-        );
-        const basescanData = await basescanResponse.json();
-        
-        if (basescanData.result && Array.isArray(basescanData.result)) {
-          allTxs = basescanData.result.slice(0, 10).map((tx: any) => ({
-            hash: tx.hash,
-            from: tx.from,
-            to: tx.to,
-            value: ethers.utils.formatEther(tx.value || '0'),
-            asset: 'ETH',
-            direction: tx.from.toLowerCase() === walletAddress.toLowerCase() ? 'out' : 'in',
-            blockNum: tx.blockNumber
-          }));
-          console.log("📜 BaseScan found:", allTxs.length, "transactions");
-        }
-      }
-      
-      console.log("📜 Total transactions:", allTxs.length, allTxs);
-      setTransactions(allTxs);
-    } catch (e) {
-      console.error("Failed to fetch transaction history:", e);
-    } finally {
-      setIsLoadingTxHistory(false);
     }
   };
 
@@ -1023,20 +924,12 @@ function App() {
                 </Button>
               </Card>
 
-              {/* Wallet Balances */}
-              <Card size="small" style={{ backgroundColor: "#fafafa" }}>
-                <Space style={{ width: "100%", justifyContent: "space-around" }}>
-                  <div style={{ textAlign: "center" }}>
-                    <Text type="secondary" style={{ fontSize: "12px" }}>Wallet ETH</Text>
-                    <div><Text strong>{walletEthBalance} ETH</Text></div>
-                  </div>
-                  <Divider type="vertical" style={{ height: "40px" }} />
-                  <div style={{ textAlign: "center" }}>
-                    <Text type="secondary" style={{ fontSize: "12px" }}>Wallet USDC</Text>
-                    <div><Text strong>{walletUsdcBalance} USDC</Text></div>
-                  </div>
-                </Space>
-              </Card>
+          <Card size="small" style={{ backgroundColor: "#f5f5f5" }}>
+            <Space style={{ width: "100%", justifyContent: "space-between" }}>
+              <Text type="secondary"> USDC Balance:</Text>
+              <Text strong>{parseFloat(usdcBalance).toFixed(2)} USDC</Text>
+            </Space>
+          </Card>
 
               {/* Action Buttons */}
               <Space style={{ width: "100%", justifyContent: "center" }} size="middle">
@@ -1141,12 +1034,6 @@ function App() {
                   View on BaseScan ↗
                 </Button>
                 <Button 
-                  type="dashed"
-                  onClick={() => setShowRawData(!showRawData)}
-                >
-                  {showRawData ? "Hide" : "Show"} Details
-                </Button>
-                <Button 
                   type="default"
                   onClick={startAttestation}
                   loading={doingAttestation}
@@ -1155,63 +1042,7 @@ function App() {
                 </Button>
               </Space>
 
-              {/* Transaction History */}
-              <Divider style={{ margin: "15px 0 10px 0" }}>
-                <Space>
-                  <HistoryOutlined />
-                  <Text type="secondary">Recent Transactions</Text>
-                  <Button 
-                    type="link" 
-                    size="small" 
-                    onClick={fetchTransactionHistory}
-                    loading={isLoadingTxHistory}
-                    style={{ padding: 0 }}
-                  >
-                    <ReloadOutlined />
-                  </Button>
-                </Space>
-              </Divider>
-
-              {isLoadingTxHistory ? (
-                <div style={{ textAlign: "center", padding: "20px" }}>
-                  <Spin size="small" />
-                  <Text type="secondary" style={{ marginLeft: "10px" }}>Loading transactions...</Text>
-                </div>
-              ) : transactions.length > 0 ? (
-                <List
-                  size="small"
-                  dataSource={transactions.slice(0, 5)}
-                  renderItem={(tx: any) => (
-                    <List.Item style={{ padding: "8px 0" }}>
-                      <Space style={{ width: "100%", justifyContent: "space-between" }}>
-                        <Space>
-                          {tx.direction === 'in' ? (
-                            <Tag color="green"><ArrowDownOutlined /> IN</Tag>
-                          ) : (
-                            <Tag color="red"><ArrowUpOutlined /> OUT</Tag>
-                          )}
-                          <Text style={{ fontSize: "12px" }}>
-                            {tx.value ? parseFloat(tx.value).toFixed(4) : '0'} {tx.asset || 'ETH'}
-                          </Text>
-                        </Space>
-                        <Tooltip title={tx.hash}>
-                          <Button 
-                            type="link" 
-                            size="small"
-                            onClick={() => window.open(`https://sepolia.basescan.org/tx/${tx.hash}`, "_blank")}
-                          >
-                            {tx.hash?.slice(0, 8)}... ↗
-                          </Button>
-                        </Tooltip>
-                      </Space>
-                    </List.Item>
-                  )}
-                />
-              ) : (
-                <div style={{ textAlign: "center", padding: "15px" }}>
-                  <Text type="secondary">No transactions yet</Text>
-                </div>
-              )}
+              {/* Transaction History - REMOVED */}
             </Space>
           </Card>
         )}
