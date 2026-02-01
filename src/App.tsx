@@ -871,22 +871,20 @@ function App() {
     <div>
       <div className="container">
         {/* Header */}
-        <div>
-          <Title level={2} className="main-title" style={{ marginBottom: "10px" }}>
-            🔐 zkTLS Email Wallet
-          </Title>
-          <Text type="secondary">
-            {isLoggedIn 
-              ? `Welcome back! Your wallet is ready.`
-              : "Verify your Google email and get a smart contract wallet powered by Primus zkTLS"
-            }
-          </Text>
-        </div>
 
         {/* Not logged in - Show verify button */}
         {!isLoggedIn && (
-          <div style={{ marginTop: "30px" }}>
+          <div style={{ marginTop: "30px", width: "100%" }}>
+            {/* Main CTA Card */}
             <div className="card">
+              <img src="./zkbankimg.png" alt="zkBank" style={{ width: "120px", height: "120px", marginBottom: "1rem", borderRadius: "12px" }} />
+              <Text strong style={{ fontSize: "1.2rem", color: "#1a1a1a", marginBottom: "0.5rem" }}>
+                A Wallet Even Your Grandma Can Use
+              </Text>
+              <Text type="secondary" style={{ marginBottom: "1.5rem", fontSize: "0.95rem", lineHeight: "1.5" }}>
+                No seed phrases to memorize. No private keys to lose. The future of Web3 UX is accessible to billions of Gmail users.
+              </Text>
+              
               <Button
                 type="primary"
                 size="large"
@@ -895,21 +893,36 @@ function App() {
                 loading={doingAttestation}
                 icon={<WalletOutlined />}
                 style={{
-                  backgroundColor: "#1890ff",
-                  borderColor: "#1890ff",
+                  background: "linear-gradient(135deg, #1a472a 0%, #2d6a4f 50%, #40916c 100%)",
+                  borderColor: "transparent",
                   height: "50px",
                   fontSize: "16px",
                   paddingLeft: "30px",
                   paddingRight: "30px",
+                  boxShadow: "0 10px 30px rgba(26, 71, 42, 0.3)",
+                  borderRadius: "10px",
+                  width: "100%",
+                  marginBottom: "0.5rem"
                 }}
               >
                 {doingAttestation 
                   ? "Verifying..." 
-                  : "🚀 Login with Google Email"}
+                  : "🚀 Start with Gmail"}
               </Button>
               <Text type="secondary" style={{ marginTop: "10px", fontSize: "12px" }}>
-                No password needed - your email is your key!
+                ✅ Seedless. ✅ Security by Google. ✅ ZKTLS
               </Text>
+
+              {/* Trust Indicators */}
+              <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid #f0f0f0", width: "100%" }}>
+                <Text type="secondary" style={{ fontSize: "11px", display: "block", marginBottom: "0.8rem" }}>
+                  🔒 Powered by
+                </Text>
+                <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", gap: "1rem" }}>
+                  <Text type="secondary" style={{ fontSize: "0.85rem" }}>Primus zkTLS</Text>
+                  <Text type="secondary" style={{ fontSize: "0.85rem" }}>Google Account</Text>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -965,19 +978,21 @@ function App() {
               {/* Balance Card */}
               <Card 
                 style={{ 
-                  backgroundColor: "#f0f5ff", 
-                  borderColor: "#adc6ff",
-                  textAlign: "center" 
+                  background: "linear-gradient(135deg, #1a472a 0%, #2d6a4f 50%, #40916c 100%)",
+                  borderColor: "transparent",
+                  textAlign: "center",
+                  boxShadow: "0 10px 40px rgba(26, 71, 42, 0.2)",
+                  color: "white"
                 }}
               >
-                <Text type="secondary">Aave Earnings Balance</Text>
-                <Title level={2} style={{ margin: "10px 0", color: "#1890ff" }}>
+                <Text type="secondary" style={{ color: "rgba(255, 255, 255, 0.8)" }}>Aave Earnings Balance</Text>
+                <Title level={2} style={{ margin: "10px 0", color: "#ffffff" }}>
                   {isLoadingBalance ? "Loading..." : `$${aaveBalance}`}
                 </Title>
-                <Text type="secondary" style={{ fontSize: "12px" }}>
+                <Text type="secondary" style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.7)" }}>
                   Earning yield on Aave V3
                 </Text>
-                <Button type="link" size="small" onClick={() => { fetchAaveBalance(); fetchWalletBalances(); }} loading={isLoadingBalance}>
+                <Button type="link" size="small" onClick={() => { fetchAaveBalance(); fetchWalletBalances(); }} loading={isLoadingBalance} style={{ color: "#ffffff", marginTop: "8px" }}>
                   <ReloadOutlined /> Refresh
                 </Button>
               </Card>
@@ -1005,9 +1020,11 @@ function App() {
                   icon={<BankOutlined />}
                   onClick={openDepositModal}
                   style={{ 
-                    backgroundColor: "#52c41a", 
-                    borderColor: "#52c41a",
-                    minWidth: "140px"
+                    background: "linear-gradient(135deg, #1a472a 0%, #2d6a4f 50%, #40916c 100%)",
+                    borderColor: "transparent",
+                    boxShadow: "0 8px 24px rgba(26, 71, 42, 0.25)",
+                    minWidth: "140px",
+                    borderRadius: "8px"
                   }}
                 >
                   Deposit
@@ -1021,7 +1038,13 @@ function App() {
                     setWithdrawAmount(0);
                     setWithdrawAddress("");
                   }}
-                  style={{ minWidth: "140px" }}
+                  style={{ 
+                    background: "linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #3a5568 100%)",
+                    borderColor: "transparent",
+                    boxShadow: "0 8px 24px rgba(52, 73, 94, 0.25)",
+                    minWidth: "140px",
+                    borderRadius: "8px"
+                  }}
                 >
                   Withdraw
                 </Button>
@@ -1031,9 +1054,11 @@ function App() {
                   icon={<SendOutlined />}
                   onClick={openSendModal}
                   style={{ 
-                    backgroundColor: "#722ed1", 
-                    borderColor: "#722ed1",
-                    minWidth: "140px"
+                    background: "linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 50%, #3d5cc9 100%)",
+                    borderColor: "transparent",
+                    boxShadow: "0 8px 24px rgba(30, 58, 95, 0.25)",
+                    minWidth: "140px",
+                    borderRadius: "8px"
                   }}
                 >
                   Send to Email
@@ -1053,7 +1078,10 @@ function App() {
                       type="primary"
                       onClick={claimPendingTransfers}
                       loading={isClaiming}
-                      style={{ backgroundColor: "#faad14", borderColor: "#faad14" }}
+                      style={{ 
+                        background: "linear-gradient(135deg, #1a472a 0%, #2d6a4f 50%, #40916c 100%)",
+                        borderColor: "transparent"
+                      }}
                     >
                       {isClaiming ? "Claiming..." : "Claim USDC"}
                     </Button>
@@ -1240,7 +1268,10 @@ function App() {
                 onClick={handleApprove}
                 loading={isApproving}
                 disabled={depositAmount <= 0}
-                style={{ backgroundColor: "#fa8c16", borderColor: "#fa8c16" }}
+                style={{ 
+                  background: "linear-gradient(135deg, #b8860b 0%, #daa520 100%)",
+                  borderColor: "transparent"
+                }}
               >
                 {isApproving ? "Approving..." : "1. Approve USDC"}
               </Button>
@@ -1250,7 +1281,10 @@ function App() {
                 onClick={executeDeposit}
                 loading={isDepositing}
                 disabled={depositAmount <= 0}
-                style={{ backgroundColor: "#52c41a", borderColor: "#52c41a" }}
+                style={{ 
+                  background: "linear-gradient(135deg, #1a472a 0%, #2d6a4f 50%, #40916c 100%)",
+                  borderColor: "transparent"
+                }}
               >
                 {isDepositing ? "Depositing..." : "2. Deposit & Verify Email"}
               </Button>
@@ -1319,7 +1353,10 @@ function App() {
               onClick={executeWithdraw}
               loading={isWithdrawing}
               disabled={withdrawAmount <= 0 || !withdrawAddress.startsWith("0x")}
-              danger
+              style={{ 
+                background: "linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #3a5568 100%)",
+                borderColor: "transparent"
+              }}
             >
               {isWithdrawing ? "Verifying & Withdrawing..." : "Withdraw & Verify Email"}
             </Button>
@@ -1341,7 +1378,7 @@ function App() {
         <Space direction="vertical" style={{ width: "100%" }} size="middle">
           <Alert
             message="Send crypto to any email!"
-            description="Recipient doesn't need a wallet yet. They can claim by logging in with their Google email."
+            description="Recipient doesn't need a wallet yet. They can claim by verifying with Google Account."
             type="info"
             showIcon
           />
@@ -1416,7 +1453,10 @@ function App() {
                 onClick={handleApproveForSend}
                 loading={isApprovingForSend}
                 disabled={sendAmount <= 0}
-                style={{ backgroundColor: "#fa8c16", borderColor: "#fa8c16" }}
+                style={{ 
+                  background: "linear-gradient(135deg, #b8860b 0%, #daa520 100%)",
+                  borderColor: "transparent"
+                }}
               >
                 {isApprovingForSend ? "Approving..." : "1. Approve USDC"}
               </Button>
@@ -1426,7 +1466,10 @@ function App() {
                 onClick={executeSendToEmail}
                 loading={isSending}
                 disabled={sendAmount <= 0 || !recipientEmail.includes("@")}
-                style={{ backgroundColor: "#722ed1", borderColor: "#722ed1" }}
+                style={{ 
+                  background: "linear-gradient(135deg, #1e3a5f 0%, #2c5aa0 50%, #3d5cc9 100%)",
+                  borderColor: "transparent"
+                }}
               >
                 {isSending ? "Sending..." : "2. Send to Email"}
               </Button>

@@ -61,7 +61,7 @@ app.post('/api/send-email', async (req, res) => {
             <h3 style="color: #333;">How to claim:</h3>
             <ol style="color: #555;">
               <li>Visit zkBank</li>
-              <li>Login with Google Email</li>
+              <li>Verify Google Account</li>
               <li>Click "Check for Incoming Transfers"</li>
               <li>Click "Claim USDC"</li>
             </ol>
