@@ -83,8 +83,8 @@ app.post('/api/send-email', async (req, res) => {
   }
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 API Server running on http://localhost:${PORT}`);
+  console.log(`🚀 API Server running on port ${PORT}`);
   console.log(`   Test: http://localhost:${PORT}/api/test`);
 });
