@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 dotenv.config();
 
@@ -9,16 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Create nodemailer transporter using Gmail
-// You need to use an App Password (not your regular Gmail password)
-// Go to: Google Account > Security > 2-Step Verification > App passwords
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS  // Use App Password from Google
-  }
-});
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Test endpoint
 app.get('/api/test', (req, res) => {
@@ -26,8 +18,8 @@ app.get('/api/test', (req, res) => {
     status: 'ok', 
     message: 'API is working!', 
     time: new Date().toISOString(),
-    emailConfigured: !!process.env.EMAIL_USER,
-    emailUser: process.env.EMAIL_USER ? 'Set' : 'NOT SET'
+    resendConfigured: !!process.env.RESEND_API_KEY,
+    resendKey: process.env.RESEND_API_KEY ? 'Set' : 'NOT SET'
   });
 });
 
@@ -42,8 +34,8 @@ app.post('/api/send-email', async (req, res) => {
 
     console.log('📧 Sending email to:', recipientEmail);
 
-    const mailOptions = {
-      from: `"zkBank" <${process.env.EMAIL_USER}>`,
+    const { data, error } = await resend.emails.send({
+      from: 'zkBank <onboarding@resend.dev>',
       to: recipientEmail,
       subject: `💰 You received ${amount} USDC!`,
       html: `
@@ -77,12 +69,16 @@ app.post('/api/send-email', async (req, res) => {
           </div>
         </div>
       `,
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
-    console.log('✅ Email sent successfully!');
+    if (error) {
+      console.error('❌ Email error:', error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+
+    console.log('✅ Email sent successfully!', data);
+    res.json({ success: true, message: 'Email sent successfully', data });
     
-    res.json({ success: true, message: 'Email sent successfully' });
   } catch (error) {
     console.error('❌ Email error:', error.message);
     res.status(500).json({ success: false, error: error.message });
