@@ -207,6 +207,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState({});
+  //@ts-ignore
   const [showRawData, setShowRawData] = useState(false);
   const [aaveBalance, setAaveBalance] = useState<string>("0");
   const [isLoadingBalance, setIsLoadingBalance] = useState(false);
@@ -220,6 +221,7 @@ function App() {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [allowance, setAllowance] = useState<string>("0");
   const [usdcBalance, setUsdcBalance] = useState<string>("0");
+  //@ts-ignore
   const [walletUsdcBalance, setWalletUsdcBalance] = useState<string>("0.00");
 
   // Send to Email states
