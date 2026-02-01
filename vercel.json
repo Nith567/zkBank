@@ -1,12 +1,4 @@
 {
-  "version": 2,
-  "framework": null,
   "buildCommand": "npm run build",
-  "devCommand": "vite --port 5173",
-  "outputDirectory": "dist",
-  "functions": {
-    "api/*.ts": {
-      "runtime": "@vercel/node@3.0.0"
-    }
-  }
+  "outputDirectory": "dist"
 }
