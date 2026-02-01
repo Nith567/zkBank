@@ -670,19 +670,21 @@ function App() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             recipientEmail: recipientEmail,
-            senderEmail: email, // Your verified email
             amount: sendAmount,
             note: sendNote || ""
-          })
+          }),
+          signal: AbortSignal.timeout(10000) // 10 second timeout
         });
         
         if (!emailResponse.ok) {
-          console.warn("⚠️ Email notification failed, but transaction succeeded");
+          const errorData = await emailResponse.json();
+          console.warn("⚠️ Email notification failed:", errorData);
         } else {
-          console.log("📧 Email notification sent successfully!");
+          const successData = await emailResponse.json();
+          console.log("📧 Email notification sent successfully!", successData);
         }
-      } catch (emailError) {
-        console.warn("⚠️ Could not send email notification:", emailError);
+      } catch (emailError: any) {
+        console.warn("⚠️ Could not send email notification:", emailError.message);
         // Don't fail the entire transaction if email fails
       }
       

@@ -22,16 +22,22 @@ const transporter = nodemailer.createTransport({
 
 // Test endpoint
 app.get('/api/test', (req, res) => {
-  res.json({ status: 'ok', message: 'API is working!', time: new Date().toISOString() });
+  res.json({ 
+    status: 'ok', 
+    message: 'API is working!', 
+    time: new Date().toISOString(),
+    emailConfigured: !!process.env.EMAIL_USER,
+    emailUser: process.env.EMAIL_USER ? 'Set' : 'NOT SET'
+  });
 });
 
 // Send email endpoint
 app.post('/api/send-email', async (req, res) => {
   try {
-    const { recipientEmail, senderEmail, amount, note } = req.body;
+    const { recipientEmail, amount, note } = req.body;
 
-    if (!recipientEmail || !senderEmail || !amount) {
-      return res.status(400).json({ error: 'Missing required fields' });
+    if (!recipientEmail || !amount) {
+      return res.status(400).json({ error: 'Missing required fields: recipientEmail, amount' });
     }
 
     console.log('📧 Sending email to:', recipientEmail);
@@ -49,7 +55,7 @@ app.post('/api/send-email', async (req, res) => {
               <h1 style="color: #ffffff; margin: 8px 0; font-size: 48px;">${amount} USDC</h1>
             </div>
             <p style="font-size: 16px; color: #333;">
-              <strong>${senderEmail}</strong> just sent you <strong>${amount} USDC</strong> using zkBank!
+              zkBank has sent you <strong>${amount} USDC</strong>! 🎉
             </p>
             ${note ? `
             <div style="background: #f9f9f9; border-left: 4px solid #722ed1; padding: 12px 16px; margin: 16px 0;">
