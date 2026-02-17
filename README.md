@@ -2,7 +2,12 @@
 
 > **Your Email is Your Wallet** — Pay anyone's email. Auto-earn Aave yields. No seed phrases. No Web3 friction.
 
-zkBank is a self-custodial smart wallet powered by **Primus zkTLS** that lets you control crypto using just your Gmail. Send USDC to any email, earn yield on Aave, and never worry about seed phrases again.
+![BSC](https://img.shields.io/badge/Built%20on-BSC-F0B90B)
+![Aave](https://img.shields.io/badge/Yield-Aave%20V3-B6509E)
+![Solidity](https://img.shields.io/badge/Solidity-0.8.x-purple)
+![React](https://img.shields.io/badge/React-18-61dafb)
+
+zkBank is a self-custodial smart wallet deployed on **BSC** that lets you control crypto using just your Gmail. Send USDC to any email, earn yield on Aave, and never worry about seed phrases again.
 
 ---
 
@@ -18,16 +23,16 @@ Web3 onboarding is broken:
 
 ---
 
-## 💡 Solution: Powered by Primus zkTLS
+## 💡 Solution: Built on BSC
 
-zkBank leverages **Primus zkTLS** to create a revolutionary experience:
+zkBank leverages **BSC (BNB Smart Chain)** for fast, low-cost DeFi transactions:
 
 ### 🔐 Zero-Knowledge Email Verification
-Using Primus zkTLS, we cryptographically prove you own your email **without exposing any private data**. Your Gmail becomes your wallet key — no seed phrases, no private keys to manage.
+Using zkTLS, we cryptographically prove you own your email **without exposing any private data**. Your Gmail becomes your wallet key — no seed phrases, no private keys to manage.
 
-### How Primus zkTLS Works:
-1. **TLS Session Proof** — Primus creates a zero-knowledge proof of your Google login
-2. **On-Chain Attestation** — The proof is verified and recorded on-chain
+### How It Works:
+1. **TLS Session Proof** — zkTLS creates a zero-knowledge proof of your Google login
+2. **On-Chain Attestation** — The proof is verified and recorded on BSC
 3. **Wallet Binding** — Your email hash is permanently linked to your smart wallet
 4. **Privacy Preserved** — Your actual email is never stored on-chain
 
@@ -40,7 +45,13 @@ This means:
 
 ## ✨ Features
 
-### 🔐 Primus zkTLS Authentication
+### ⛓️ BSC Native
+- **Low gas fees** — Transactions cost fractions of a cent
+- **Fast finality** — Near-instant transaction confirmations
+- **Aave V3 integration** — Battle-tested DeFi on BSC
+- **Production ready** — Deployed on BSC Mainnet
+
+### 🔐 zkTLS Authentication
 - **Zero-knowledge proof** of Gmail ownership
 - No seed phrases — your email IS your wallet
 - Privacy-preserving on-chain attestations
@@ -67,16 +78,16 @@ This means:
 │                        zkBank                                │
 ├─────────────────────────────────────────────────────────────┤
 │  Frontend (React + Vite)                                     │
-│  - Google Login via Primus zkTLS                            │
+│  - Google Login via zkTLS                                   │
 │  - Wallet Dashboard                                          │
 │  - Send/Receive USDC                                         │
 ├─────────────────────────────────────────────────────────────┤
-│  Smart Contracts (BNB Chain Mainnet)                         │
+│  Smart Contracts (BSC Mainnet)                               │
 │  - ZKTLSWalletFactory: Creates wallets for emails           │
 │  - ZKTLSWallet: Individual email wallets                    │
 │  - Aave Integration: Deposit/Withdraw yield                 │
 ├─────────────────────────────────────────────────────────────┤
-│  zkTLS (Primus Labs)                                         │
+│  zkTLS                                                       │
 │  - Zero-knowledge email verification                        │
 │  - Privacy-preserving attestations                          │
 └─────────────────────────────────────────────────────────────┘
@@ -88,17 +99,17 @@ This means:
 
 | Layer | Technology |
 |-------|------------|
-| **Identity** | **Primus zkTLS** — Zero-knowledge email verification |
+| **Blockchain** | **BSC** — Fast, low-cost transactions |
 | **DeFi** | **Aave V3** — Auto-yield on deposits |
+| **Identity** | zkTLS — Zero-knowledge email verification |
 | **Frontend** | React 18, TypeScript, Vite |
 | **Smart Contracts** | Solidity, Foundry |
-| **Notifications** | Nodemailer |
 
 ---
 
 ## 📜 Smart Contracts
 
-### Deployed on BNB Chain Mainnet
+### Deployed on BSC Mainnet
 
 | Contract | Address |
 |----------|---------|
@@ -116,8 +127,8 @@ This means:
 
 ### Prerequisites
 - Node.js 18+
-- BNB for gas fees (BNB Chain Mainnet)
-- USDC on BNB Chain
+- BNB for gas fees (BSC Mainnet)
+- USDC on BSC
 
 ### Installation
 
@@ -131,20 +142,12 @@ npm install
 
 # Set up environment variables
 cp .env.example .env
-# Add your Gmail credentials for email notifications(optional)
-# Start the API server (for email notifications)
+
+# Start the API server (for email notifications - optional)
 node server.js
 
 # In another terminal, start the frontend
 npm run dev
-```
-
-### Environment Variables
-
-```env
-# Email Configuration (Gmail with App Password)
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-16-char-app-password
 ```
 
 ---
@@ -152,7 +155,7 @@ EMAIL_PASS=your-16-char-app-password
 ## 📱 How It Works
 
 ### For Senders:
-1. **Connect MetaMask** to BNB Chain Mainnet
+1. **Connect MetaMask** to BSC Mainnet
 2. **Login with Google** via zkTLS
 3. **Deposit USDC** to your zkBank wallet
 4. **Enter recipient's email** and amount
@@ -168,10 +171,10 @@ EMAIL_PASS=your-16-char-app-password
 
 ## 🔒 Security
 
-- **Primus zkTLS**: Email ownership verified with zero-knowledge proofs
+- **zkTLS**: Email ownership verified with zero-knowledge proofs
 - **Self-Custodial**: You control your own smart contract wallet
 - **No Seed Phrases**: Your Google account is your key
-- **On-Chain Attestations**: All verifications are cryptographically recorded
+- **On-Chain Attestations**: All verifications recorded on BSC
 
 ---
 
@@ -191,23 +194,29 @@ EMAIL_PASS=your-16-char-app-password
 
 ## 🏆 Hackathon Track: DeFi
 
-### � Why DeFi Track?
+### 💰 Why DeFi Track?
 
-zkBank is a **practical DeFi tool** that solves real problems:
+zkBank is a **practical DeFi tool built on BSC** that solves real problems:
 
 | Criteria | How zkBank Delivers |
 |----------|---------------------|
-| **Yield Dashboard** | Auto-deposit to Aave V3, track earnings in real-time |
+| **Yield Dashboard** | Auto-deposit to Aave V3 on BSC, track earnings in real-time |
 | **Usable** | Login with Gmail — no seed phrases, no complex setup |
-| **Reproducible** | Open-source smart contracts, deployed on BNB Chain |
+| **Reproducible** | Open-source smart contracts, deployed on BSC Mainnet |
 | **No Token Required** | Uses existing USDC, no new token needed |
+
+### Why BSC?
+- ⚡ **Fast & Cheap** — Sub-second blocks, minimal gas fees
+- 🏦 **DeFi Ecosystem** — Aave V3, Venus, PancakeSwap integration ready
+- 🌍 **Mass Adoption** — One of the most used chains globally
+- 🔒 **Battle-tested** — Secure, reliable infrastructure
 
 ### Key DeFi Features:
 - 📈 **Auto-Yield Generation** — All deposits automatically earn Aave V3 interest
 - 💸 **Email-Based Payments** — Send USDC to any email address
 - 🔐 **Self-Custodial Wallets** — Users control their own smart contract wallet
 - 🔗 **Aave V3 Integration** — Battle-tested DeFi protocol for yield
-- ⛓️ **BNB Chain Native** — Low fees, fast transactions
+- ⛓️ **BSC Native** — Low fees, fast transactions
 
 ---
 
@@ -218,10 +227,6 @@ zkBank is a **practical DeFi tool** that solves real problems:
 
 ---
 
----
-
 ## 📄 License
 
 MIT License
-
----
