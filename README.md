@@ -4,11 +4,6 @@
 
 zkBank is a self-custodial smart wallet powered by **Primus zkTLS** that lets you control crypto using just your Gmail. Send USDC to any email, earn yield on Aave, and never worry about seed phrases again.
 
-![Primus zkTLS](https://img.shields.io/badge/Powered%20by-Primus%20zkTLS-00D4AA)
-![Aave](https://img.shields.io/badge/Yield-Aave%20V3-B6509E)
-![Solidity](https://img.shields.io/badge/Solidity-0.8.x-purple)
-![React](https://img.shields.io/badge/React-18-61dafb)
-
 ---
 
 ## 🎯 Problem Statement
@@ -76,7 +71,7 @@ This means:
 │  - Wallet Dashboard                                          │
 │  - Send/Receive USDC                                         │
 ├─────────────────────────────────────────────────────────────┤
-│  Smart Contracts (Base Sepolia)                              │
+│  Smart Contracts (BNB Chain Mainnet)                         │
 │  - ZKTLSWalletFactory: Creates wallets for emails           │
 │  - ZKTLSWallet: Individual email wallets                    │
 │  - Aave Integration: Deposit/Withdraw yield                 │
@@ -103,6 +98,12 @@ This means:
 
 ## 📜 Smart Contracts
 
+### Deployed on BNB Chain Mainnet
+
+| Contract | Address |
+|----------|---------|
+| **ZKTLSWalletFactory** | [`0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4`](https://bscscan.com/address/0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4) |
+
 | Contract | Description |
 |----------|-------------|
 | **ZKTLSWalletFactory** | Creates wallets & handles send-to-email |
@@ -115,22 +116,22 @@ This means:
 
 ### Prerequisites
 - Node.js 18+
-- Base Sepolia USDC
+- BNB for gas fees (BNB Chain Mainnet)
+- USDC on BNB Chain
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/zkbank.git
-cd zkbank
+git clone https://github.com/Nith567/zkBank
+cd zkBank
 
 # Install dependencies
 npm install
 
 # Set up environment variables
 cp .env.example .env
-# Add your Gmail credentials for email notifications
-
+# Add your Gmail credentials for email notifications(optional)
 # Start the API server (for email notifications)
 node server.js
 
@@ -151,7 +152,7 @@ EMAIL_PASS=your-16-char-app-password
 ## 📱 How It Works
 
 ### For Senders:
-1. **Connect MetaMask** to Base Sepolia
+1. **Connect MetaMask** to BNB Chain Mainnet
 2. **Login with Google** via zkTLS
 3. **Deposit USDC** to your zkBank wallet
 4. **Enter recipient's email** and amount
@@ -188,42 +189,25 @@ EMAIL_PASS=your-16-char-app-password
 
 ---
 
-## 🏆 Hackathon Tracks
+## 🏆 Hackathon Track: DeFi
 
-### 🔐 1. Privacy & Zero-Knowledge Applications (Main Track)
-zkBank is built on **zero-knowledge principles**:
-- **zkTLS proofs** verify email ownership without revealing credentials
-- Your Google password is **never exposed** — not to us, not to anyone
-- Email hashes stored on-chain, **actual emails remain private**
-- Prove you own an email without exposing sensitive data
+### � Why DeFi Track?
 
-### ⚡ 2. Primus zkTLS Prize Main Track
-**Primus zkTLS is the core technology** powering zkBank:
-- Novel use case: **Email-based smart contract wallets**
-- First-of-its-kind integration of zkTLS for DeFi identity
-- Eliminates seed phrases using zero-knowledge email verification
-- Privacy-preserving authentication for Web3
+zkBank is a **practical DeFi tool** that solves real problems:
 
-### � 3. Open Digital Economy
-Making DeFi **accessible to everyone**:
-- **Email-based payments** — send crypto like sending an email
-- **No Web3 knowledge required** — just login with Google
-- **Financial inclusion** — no seed phrases, no wallet setup
-- **Auto-yield** — everyone deserves to earn on their savings
+| Criteria | How zkBank Delivers |
+|----------|---------------------|
+| **Yield Dashboard** | Auto-deposit to Aave V3, track earnings in real-time |
+| **Usable** | Login with Gmail — no seed phrases, no complex setup |
+| **Reproducible** | Open-source smart contracts, deployed on BNB Chain |
+| **No Token Required** | Uses existing USDC, no new token needed |
 
-### 🏅 4. Digital Resilience — P2P Innovation
-True **peer-to-peer finance** with no middlemen:
-- **Direct P2P payments** — Alice sends to Bob's email, no PayPal/Venmo in between
-- **Self-sovereign wallets** — Your funds in YOUR smart contract, no platform can freeze
-- **Email as universal identity** — Send to anyone with email (7B+ people)
-- **Censorship resistant** — Permissionless transactions, no company can block you
-- **Trustless transfers** — Smart contracts guarantee delivery, math replaces trust
-
-### 🏅 5. Overall Awards
-zkBank represents the **future of Web3 UX**:
-- Bridges Web2 familiarity with Web3 capabilities
-- Makes self-custody accessible to billions of Gmail users
-- Combines identity, payments, and DeFi in one seamless experience
+### Key DeFi Features:
+- 📈 **Auto-Yield Generation** — All deposits automatically earn Aave V3 interest
+- 💸 **Email-Based Payments** — Send USDC to any email address
+- 🔐 **Self-Custodial Wallets** — Users control their own smart contract wallet
+- 🔗 **Aave V3 Integration** — Battle-tested DeFi protocol for yield
+- ⛓️ **BNB Chain Native** — Low fees, fast transactions
 
 ---
 
@@ -241,8 +225,3 @@ zkBank represents the **future of Web3 UX**:
 MIT License
 
 ---
-
-## 🙏 Resources
-
-- [**Primus Labs**](https://primuslabs.xyz/) — zkTLS infrastructure powering our identity layer
-- [Aave](https://aave.com/) — DeFi lending protocol for auto-yield

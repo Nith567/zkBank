@@ -10,3 +10,5 @@ solc_version = "0.8.20"
 
 [rpc_endpoints]
 base_sepolia = "https://base-sepolia.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj"
+bnb_mainnet = "https://bnb-mainnet.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj"
+bnb_testnet = "https://data-seed-prebsc-1-s1.binance.org:8545/"
