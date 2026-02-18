@@ -166,7 +166,7 @@ const ERC20Abi = [
 const USDC_ADDRESS = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
 
 // Factory contract address (for send to email)
-const FACTORY_ADDRESS = "0xa6B7C569cDD6Cb50F37A14dec05FE4d2858C7699";
+const FACTORY_ADDRESS = "0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4";
 
 // Factory ABI for send-to-email feature
 const FactoryAbi = [

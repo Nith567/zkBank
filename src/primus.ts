@@ -281,7 +281,7 @@ const AttestorTestAbi = [
 ];
 
 // Your deployed ZkTLSWalletFactory contract address
-const FACTORY_ADDRESS = "0xa6B7C569cDD6Cb50F37A14dec05FE4d2858C7699";
+const FACTORY_ADDRESS = "0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4";
 
 export async function primusProofTest(
   callback: (attestation: string, walletAddress: string, email: string) => void
