@@ -129,6 +129,7 @@ This means:
 - Node.js 18+
 - BNB for gas fees (BSC Mainnet)
 - USDC on BSC
+- [**Primus Extension**](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe) — Required for zkTLS authentication
 
 ### Installation
 
@@ -153,6 +154,8 @@ npm run dev
 ---
 
 ## 📱 How It Works
+
+> ⚠️ **Required:** Install the [Primus Extension](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe) for zkTLS authentication
 
 ### For Senders:
 1. **Connect MetaMask** to BSC Mainnet
