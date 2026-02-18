@@ -4,7 +4,7 @@
       "hash": "0x37aec3ea36c933ed523681faa79b88c84e9f48d003c2fda2b0bb4ec3c6f329fd",
       "transactionType": "CREATE",
       "contractName": "ZkTLSWalletFactory",
-      "contractAddress": "0x3d502f567333082d0eee9368ba0ab90a31bf52f4",
+      "contractAddress": "0xB471fb197A092Fd8B580862775ff49f063d02F7e",
       "function": null,
       "arguments": [
         "0xBc074EbE6D39A97Fb35726832300a950e2D94324",
@@ -37,7 +37,7 @@
       "effectiveGasPrice": "0x2faf080",
       "from": "0x6121a6039a1dc67a9db8bddd1de3bb2d3f9ed2b0",
       "to": null,
-      "contractAddress": "0x3d502f567333082d0eee9368ba0ab90a31bf52f4"
+      "contractAddress": "0xB471fb197A092Fd8B580862775ff49f063d02F7e"
     }
   ],
   "libraries": [],

@@ -113,7 +113,7 @@ This means:
 
 | Contract | Address |
 |----------|---------|
-| **ZKTLSWalletFactory** | [`0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4`](https://bscscan.com/address/0x3D502F567333082d0EeE9368ba0AB90A31Bf52f4) |
+| **ZKTLSWalletFactory** | [`0xB471fb197A092Fd8B580862775ff49f063d02F7e`](https://bscscan.com/address/0xB471fb197A092Fd8B580862775ff49f063d02F7e) |
 
 | Contract | Description |
 |----------|-------------|

@@ -9,7 +9,7 @@ contract DeployScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         
         // BNB Chain MAINNET addresses
-        address primusVerifier = 0xBc074EbE6D39A97Fb35726832300a950e2D94324;
+        address primusVerifier = 0xF24199D5D431bE869af3Da61162CbBb58C389324;
         // Aave V3 Pool on BNB Chain MAINNET
         address aavePool = 0x6807dc923806fE8Fd134338EABCA509979a7e0cB;
         
