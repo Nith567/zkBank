@@ -46,7 +46,7 @@ export function formatAttestationForContract(attestation: any) {
 // Get fresh attestation for deposit/withdraw operations
 export async function getFreshAttestation(): Promise<{ attestation: any; formattedAttestation: any; email: string }> {
   const TEMPLATE_ID = "3bad8a55-4415-4bec-9b47-a4c7bbe93518";
-  const BASE_SEPOLIA_CHAIN_ID = "0x14a34";
+  const BSC_MAINNET_CHAIN_ID = "0x38"; // Chain ID 56 in hex
 
   if (!window.ethereum) {
     throw new Error("MetaMask not installed");
@@ -55,14 +55,14 @@ export async function getFreshAttestation(): Promise<{ attestation: any; formatt
   let provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
-  // Switch to Base Sepolia if needed
+  // Switch to BSC Mainnet if needed
   const network = await provider.getNetwork();
-  if (network.chainId !== 84532) {
-    console.log("📡 Switching to Base Sepolia...");
+  if (network.chainId !== 56) {
+    console.log("📡 Switching to BSC Mainnet...");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: BASE_SEPOLIA_CHAIN_ID }],
+        params: [{ chainId: BSC_MAINNET_CHAIN_ID }],
       });
       await new Promise(resolve => setTimeout(resolve, 500));
       provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,11 +71,11 @@ export async function getFreshAttestation(): Promise<{ attestation: any; formatt
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [{
-            chainId: BASE_SEPOLIA_CHAIN_ID,
-            chainName: "Base Sepolia",
-            nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
-            rpcUrls: ["https://sepolia.base.org"],
-            blockExplorerUrls: ["https://sepolia.basescan.org"],
+            chainId: BSC_MAINNET_CHAIN_ID,
+            chainName: "BNB Smart Chain",
+            nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+            rpcUrls: ["https://bsc-dataseed.binance.org/"],
+            blockExplorerUrls: ["https://bscscan.com"],
           }],
         });
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -287,7 +287,7 @@ export async function primusProofTest(
   callback: (attestation: string, walletAddress: string, email: string) => void
 ) {
   const TEMPLATE_ID = "3bad8a55-4415-4bec-9b47-a4c7bbe93518";
-  const BASE_SEPOLIA_CHAIN_ID = "0x14a34";
+  const BSC_MAINNET_CHAIN_ID = "0x38"; // Chain ID 56 in hex
 
   // Connect MetaMask
   if (!window.ethereum) {
@@ -297,14 +297,14 @@ export async function primusProofTest(
   let provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
-  // Switch to Base Sepolia if needed
+  // Switch to BSC Mainnet if needed
   const network = await provider.getNetwork();
-  if (network.chainId !== 84532) {
-    console.log("📡 Switching to Base Sepolia...");
+  if (network.chainId !== 56) {
+    console.log("📡 Switching to BSC Mainnet...");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: BASE_SEPOLIA_CHAIN_ID }],
+        params: [{ chainId: BSC_MAINNET_CHAIN_ID }],
       });
       await new Promise(resolve => setTimeout(resolve, 500));
       provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -313,11 +313,11 @@ export async function primusProofTest(
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [{
-            chainId: BASE_SEPOLIA_CHAIN_ID,
-            chainName: "Base Sepolia",
-            nativeCurrency: { name: "Ethereum", symbol: "ETH", decimals: 18 },
-            rpcUrls: ["https://sepolia.base.org"],
-            blockExplorerUrls: ["https://sepolia.basescan.org"],
+            chainId: BSC_MAINNET_CHAIN_ID,
+            chainName: "BNB Smart Chain",
+            nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+            rpcUrls: ["https://bsc-dataseed.binance.org/"],
+            blockExplorerUrls: ["https://bscscan.com"],
           }],
         });
         await new Promise(resolve => setTimeout(resolve, 500));

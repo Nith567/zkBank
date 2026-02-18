@@ -162,11 +162,14 @@ const ERC20Abi = [
   }
 ];
 
-// Base Sepolia USDC address
-const USDC_ADDRESS = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
+// BSC Mainnet USDC address
+const USDC_ADDRESS = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d";
 
 // Factory contract address (for send to email)
 const FACTORY_ADDRESS = "0xB471fb197A092Fd8B580862775ff49f063d02F7e";
+
+// BSC Mainnet RPC endpoint
+const BSC_MAINNET_RPC = "https://bnb-mainnet.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj";
 
 // Factory ABI for send-to-email feature
 const FactoryAbi = [
@@ -237,9 +240,6 @@ function App() {
   const [pendingAmount, setPendingAmount] = useState<string>("0");
   const [isClaiming, setIsClaiming] = useState(false);
 
-  // Base Sepolia RPC endpoint
-  const BASE_SEPOLIA_RPC = "https://sepolia.base.org";
-
   // Load saved wallet data on mount
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY);
@@ -278,7 +278,7 @@ function App() {
     if (!email) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
+      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
       const factoryContract = new ethers.Contract(FACTORY_ADDRESS, FactoryAbi, provider);
       
       const emailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(email));
@@ -300,7 +300,7 @@ function App() {
     
     setIsLoadingBalance(true);
     try {
-      const provider = new ethers.providers.JsonRpcProvider("https://sepolia.base.org");
+      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, provider);
       const balance = await walletContract.getAaveBalance();
       // Aave returns USD value with 8 decimals, format and keep 3 decimal places
@@ -319,7 +319,7 @@ function App() {
     if (!walletAddress) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
+      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
       
       // USDC balance  
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, provider);
@@ -1033,9 +1033,9 @@ function App() {
                 </Button>
                 <Button 
                   type="link"
-                  onClick={() => window.open(`https://sepolia.basescan.org/address/${walletAddress}`, "_blank")}
+                  onClick={() => window.open(`https://bscscan.com/address/${walletAddress}`, "_blank")}
                 >
-                  View on BaseScan ↗
+                  View on BscScan ↗
                 </Button>
                 <Button 
                   type="default"
