@@ -209,7 +209,7 @@ function App() {
   const [attestation, setAttestation] = useState({});
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [error, setError] = useState({});
+  const [error, setError] = useState<{ message: string; type: string } | null>(null);
   //@ts-ignore
   const [showRawData, setShowRawData] = useState(false);
   const [aaveBalance, setAaveBalance] = useState<string>("0");
@@ -360,7 +360,7 @@ function App() {
       return;
     }
     setAttestation({});
-    setError({});
+    setError(null);
     console.log("start attestation!");
 
     setIsDoingAttestation(true);
@@ -377,7 +377,30 @@ function App() {
         }
       });
     } catch (e: any) {
-      setError(e);
+      // Parse error and create user-friendly message
+      let errorMessage = "Something went wrong. Please try again.";
+      let errorType = "error";
+      
+      if (e.code === 4001 || e.message?.includes("User rejected") || e.message?.includes("user rejected")) {
+        errorMessage = "You cancelled the request. Click 'Start with Gmail' to try again.";
+        errorType = "warning";
+      } else if (e.code === 4902) {
+        errorMessage = "Please add BSC network to your wallet and try again.";
+        errorType = "warning";
+      } else if (e.message?.includes("MetaMask not installed")) {
+        errorMessage = "MetaMask is not installed. Please install MetaMask to continue.";
+        errorType = "error";
+      } else if (e.message?.includes("Primus") || e.message?.includes("extension")) {
+        errorMessage = "Primus extension not found. Please install it from the Chrome Web Store.";
+        errorType = "error";
+      } else if (e.message?.includes("network") || e.message?.includes("RPC")) {
+        errorMessage = "Network error. Please check your connection and try again.";
+        errorType = "error";
+      } else if (e.message) {
+        errorMessage = e.message;
+      }
+      
+      setError({ message: errorMessage, type: errorType });
     } finally {
       setIsDoingAttestation(false);
     }
@@ -1052,13 +1075,41 @@ function App() {
         )}
 
         {/* Error Display */}
-        {Object.keys(error).length > 0 && (
-          <Card style={{ marginTop: "20px", borderColor: "#ff4d4f", maxWidth: "600px" }}>
+        {error && (
+          <Card 
+            style={{ 
+              marginTop: "20px", 
+              borderColor: error.type === "warning" ? "#faad14" : "#ff4d4f", 
+              maxWidth: "600px",
+              borderRadius: "12px"
+            }}
+          >
             <Alert
-              message="❌ Verification Failed"
-              description="Something went wrong during verification. Please try again."
-              type="error"
+              message={error.type === "warning" ? "⚠️ Action Required" : "❌ Verification Failed"}
+              description={error.message}
+              type={error.type === "warning" ? "warning" : "error"}
               showIcon
+              closable
+              onClose={() => setError(null)}
+              action={
+                error.message.includes("Primus") ? (
+                  <Button 
+                    size="small" 
+                    type="primary"
+                    onClick={() => window.open("https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe", "_blank")}
+                  >
+                    Install Primus
+                  </Button>
+                ) : error.message.includes("MetaMask") ? (
+                  <Button 
+                    size="small" 
+                    type="primary"
+                    onClick={() => window.open("https://metamask.io/download/", "_blank")}
+                  >
+                    Install MetaMask
+                  </Button>
+                ) : null
+              }
             />
           </Card>
         )}
@@ -1349,19 +1400,6 @@ function App() {
           <Title level={5}>Raw Attestation Data</Title>
           <JsonView
             data={attestation}
-            style={{
-              container: "my-json-container",
-            }}
-          />
-        </div>
-      )}
-
-      {/* Error Details */}
-      {Object.keys(error).length > 0 && (
-        <div style={{ marginTop: "20px", maxWidth: "800px", margin: "20px auto" }}>
-          <Title level={5}>Error Details</Title>
-          <JsonView
-            data={error}
             style={{
               container: "my-json-container",
             }}
