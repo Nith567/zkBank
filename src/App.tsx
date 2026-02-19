@@ -683,34 +683,6 @@ function App() {
       await tx.wait();
       
       message.destroy();
-      
-      // Send email notification to recipient
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL || "https://zkbank-server.onrender.com";
-        
-        const emailResponse = await fetch(`${apiUrl}/api/send-email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            recipientEmail: recipientEmail,
-            amount: sendAmount,
-            note: sendNote || ""
-          }),
-          signal: AbortSignal.timeout(10000) // 10 second timeout
-        });
-        
-        if (!emailResponse.ok) {
-          const errorData = await emailResponse.json();
-          console.warn("⚠️ Email notification failed:", errorData);
-        } else {
-          const successData = await emailResponse.json();
-          console.log("📧 Email notification sent successfully!", successData);
-        }
-      } catch (emailError: any) {
-        console.warn("⚠️ Could not send email notification:", emailError.message);
-        // Don't fail the entire transaction if email fails
-      }
-      
       message.success(`🎉 Sent ${sendAmount} USDC to ${recipientEmail}! They can claim it by logging in.`);
       
       setSendModalOpen(false);

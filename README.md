@@ -141,13 +141,7 @@ cd zkBank
 # Install dependencies
 npm install
 
-# Set up environment variables
-cp .env.example .env
-
-# Start the API server (for email notifications - optional)
-node server.js
-
-# In another terminal, start the frontend
+# Start the frontend
 npm run dev
 ```
 
