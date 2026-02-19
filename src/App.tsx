@@ -284,7 +284,7 @@ function App() {
       const emailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(email));
       const pending = await factoryContract.getPendingAmount(emailHash, USDC_ADDRESS);
       
-      const formattedAmount = ethers.utils.formatUnits(pending, 6);
+      const formattedAmount = ethers.utils.formatUnits(pending, 18);
       setPendingAmount(formattedAmount);
       
       if (parseFloat(formattedAmount) > 0) {
@@ -324,7 +324,7 @@ function App() {
       // USDC balance  
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, provider);
       const usdcBal = await usdcContract.balanceOf(walletAddress);
-      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 6)).toFixed(2));
+      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 18)).toFixed(2));
     } catch (e) {
       console.error("Failed to fetch wallet balances:", e);
     }
@@ -422,11 +422,11 @@ function App() {
       
       // Get user's USDC balance
       const balance = await usdcContract.balanceOf(userAddress);
-      setUsdcBalance(ethers.utils.formatUnits(balance, 6)); // USDC has 6 decimals
+      setUsdcBalance(ethers.utils.formatUnits(balance, 18)); // USDC on BSC has 18 decimals
       
       // Get current allowance
       const currentAllowance = await usdcContract.allowance(userAddress, walletAddress);
-      setAllowance(ethers.utils.formatUnits(currentAllowance, 6));
+      setAllowance(ethers.utils.formatUnits(currentAllowance, 18));
       
     } catch (e) {
       console.error("Failed to fetch USDC info:", e);
@@ -445,7 +445,7 @@ function App() {
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, signer);
       
       // Approve the zkTLS wallet to spend USDC
-      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 6);
+      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 18);
       const tx = await usdcContract.approve(walletAddress, amountInWei);
       
       message.loading("Approving USDC...", 0);
@@ -491,8 +491,8 @@ function App() {
       const signer = provider.getSigner();
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, signer);
       
-      // Convert amount to USDC decimals (6)
-      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 6);
+      // Convert amount to USDC decimals (18 on BSC)
+      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 18);
       
       // Call deposit function
       console.log("📤 Calling deposit on wallet contract...");
@@ -553,8 +553,8 @@ function App() {
       const signer = provider.getSigner();
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, signer);
       
-      // Convert amount to USDC decimals (6)
-      const amountInWei = ethers.utils.parseUnits(withdrawAmount.toString(), 6);
+      // Convert amount to USDC decimals (18 on BSC)
+      const amountInWei = ethers.utils.parseUnits(withdrawAmount.toString(), 18);
       
       // Call withdraw function
       console.log("📤 Calling withdraw on wallet contract...");
@@ -608,11 +608,11 @@ function App() {
       
       // Get user's USDC balance
       const balance = await usdcContract.balanceOf(userAddress);
-      setUsdcBalance(ethers.utils.formatUnits(balance, 6));
+      setUsdcBalance(ethers.utils.formatUnits(balance, 18));
       
       // Get allowance for factory contract
       const currentAllowance = await usdcContract.allowance(userAddress, FACTORY_ADDRESS);
-      setSendAllowance(ethers.utils.formatUnits(currentAllowance, 6));
+      setSendAllowance(ethers.utils.formatUnits(currentAllowance, 18));
       
     } catch (e) {
       console.error("Failed to fetch USDC info for send:", e);
@@ -630,7 +630,7 @@ function App() {
       
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, signer);
       
-      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 6);
+      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 18);
       const tx = await usdcContract.approve(FACTORY_ADDRESS, amountInWei);
       
       message.loading("Approving USDC...", 0);
@@ -668,7 +668,7 @@ function App() {
       
       // Hash the recipient email
       const recipientEmailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(recipientEmail));
-      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 6);
+      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 18);
       
       message.loading(`Sending ${sendAmount} USDC to ${recipientEmail}...`, 0);
       
