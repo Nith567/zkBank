@@ -2,12 +2,12 @@
 
 > **Your Email is Your Wallet** — Pay anyone's email. Auto-earn Aave yields. No seed phrases. No Web3 friction.
 
-![BSC](https://img.shields.io/badge/Built%20on-BSC-F0B90B)
+![Base](https://img.shields.io/badge/Built%20on-Base-0052FF)
 ![Aave](https://img.shields.io/badge/Yield-Aave%20V3-B6509E)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.x-purple)
 ![React](https://img.shields.io/badge/React-18-61dafb)
 
-zkBank is a self-custodial smart wallet deployed on **BSC** that lets you control crypto using just your Gmail. Send USDC to any email, earn yield on Aave, and never worry about seed phrases again.
+zkBank is a self-custodial smart wallet deployed on **Base** that lets you control crypto using just your Gmail. Send USDC to any email, earn yield on Aave, and never worry about seed phrases again.
 
 ---
 
@@ -23,16 +23,16 @@ Web3 onboarding is broken:
 
 ---
 
-## 💡 Solution: Built on BSC
+## 💡 Solution: Built on Base
 
-zkBank leverages **BSC (BNB Smart Chain)** for fast, low-cost DeFi transactions:
+zkBank leverages **Base (Base)** for fast, low-cost DeFi transactions:
 
 ### 🔐 Zero-Knowledge Email Verification
 Using zkTLS, we cryptographically prove you own your email **without exposing any private data**. Your Gmail becomes your wallet key — no seed phrases, no private keys to manage.
 
 ### How It Works:
 1. **TLS Session Proof** — zkTLS creates a zero-knowledge proof of your Google login
-2. **On-Chain Attestation** — The proof is verified and recorded on BSC
+2. **On-Chain Attestation** — The proof is verified and recorded on Base
 3. **Wallet Binding** — Your email hash is permanently linked to your smart wallet
 4. **Privacy Preserved** — Your actual email is never stored on-chain
 
@@ -45,11 +45,11 @@ This means:
 
 ## ✨ Features
 
-### ⛓️ BSC Native
+### ⛓️ Base Native
 - **Low gas fees** — Transactions cost fractions of a cent
 - **Fast finality** — Near-instant transaction confirmations
-- **Aave V3 integration** — Battle-tested DeFi on BSC
-- **Production ready** — Deployed on BSC Mainnet
+- **Aave V3 integration** — Battle-tested DeFi on Base
+- **Production ready** — Deployed on Base Mainnet
 
 ### 🔐 zkTLS Authentication
 - **Zero-knowledge proof** of Gmail ownership
@@ -82,7 +82,7 @@ This means:
 │  - Wallet Dashboard                                          │
 │  - Send/Receive USDC                                         │
 ├─────────────────────────────────────────────────────────────┤
-│  Smart Contracts (BSC Mainnet)                               │
+│  Smart Contracts (Base Mainnet)                               │
 │  - ZKTLSWalletFactory: Creates wallets for emails           │
 │  - ZKTLSWallet: Individual email wallets                    │
 │  - Aave Integration: Deposit/Withdraw yield                 │
@@ -99,7 +99,7 @@ This means:
 
 | Layer | Technology |
 |-------|------------|
-| **Blockchain** | **BSC** — Fast, low-cost transactions |
+| **Blockchain** | **Base** — Fast, low-cost transactions |
 | **DeFi** | **Aave V3** — Auto-yield on deposits |
 | **Identity** | zkTLS — Zero-knowledge email verification |
 | **Frontend** | React 18, TypeScript, Vite |
@@ -109,11 +109,11 @@ This means:
 
 ## 📜 Smart Contracts
 
-### Deployed on BSC Mainnet
+### Deployed on Base Mainnet
 
 | Contract | Address |
 |----------|---------|
-| **ZKTLSWalletFactory** | [`0xB471fb197A092Fd8B580862775ff49f063d02F7e`](https://bscscan.com/address/0xB471fb197A092Fd8B580862775ff49f063d02F7e) |
+| **ZKTLSWalletFactory** | [`0x0fb35B2102821ebC9dD5eb898b634080D01a905A`](https://basescan.org/address/0x0fb35B2102821ebC9dD5eb898b634080D01a905A) |
 
 | Contract | Description |
 |----------|-------------|
@@ -127,8 +127,8 @@ This means:
 
 ### Prerequisites
 - Node.js 18+
-- BNB for gas fees (BSC Mainnet)
-- USDC on BSC
+- ETH for gas fees (Base Mainnet)
+- USDC on Base
 - [**Primus Extension**](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe) — Required for zkTLS authentication
 
 ### Installation
@@ -152,7 +152,7 @@ npm run dev
 > ⚠️ **Required:** Install the [Primus Extension](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe) for zkTLS authentication
 
 ### For Senders:
-1. **Connect MetaMask** to BSC Mainnet
+1. **Connect MetaMask** to Base Mainnet
 2. **Login with Google** via zkTLS
 3. **Deposit USDC** to your zkBank wallet
 4. **Enter recipient's email** and amount
@@ -171,7 +171,7 @@ npm run dev
 - **zkTLS**: Email ownership verified with zero-knowledge proofs
 - **Self-Custodial**: You control your own smart contract wallet
 - **No Seed Phrases**: Your Google account is your key
-- **On-Chain Attestations**: All verifications recorded on BSC
+- **On-Chain Attestations**: All verifications recorded on Base
 
 ---
 
@@ -193,16 +193,16 @@ npm run dev
 
 ### 💰 Why DeFi Track?
 
-zkBank is a **practical DeFi tool built on BSC** that solves real problems:
+zkBank is a **practical DeFi tool built on Base** that solves real problems:
 
 | Criteria | How zkBank Delivers |
 |----------|---------------------|
-| **Yield Dashboard** | Auto-deposit to Aave V3 on BSC, track earnings in real-time |
+| **Yield Dashboard** | Auto-deposit to Aave V3 on Base, track earnings in real-time |
 | **Usable** | Login with Gmail — no seed phrases, no complex setup |
-| **Reproducible** | Open-source smart contracts, deployed on BSC Mainnet |
+| **Reproducible** | Open-source smart contracts, deployed on Base Mainnet |
 | **No Token Required** | Uses existing USDC, no new token needed |
 
-### Why BSC?
+### Why Base?
 - ⚡ **Fast & Cheap** — Sub-second blocks, minimal gas fees
 - 🏦 **DeFi Ecosystem** — Aave V3, Venus, PancakeSwap integration ready
 - 🌍 **Mass Adoption** — One of the most used chains globally
@@ -213,7 +213,7 @@ zkBank is a **practical DeFi tool built on BSC** that solves real problems:
 - 💸 **Email-Based Payments** — Send USDC to any email address
 - 🔐 **Self-Custodial Wallets** — Users control their own smart contract wallet
 - 🔗 **Aave V3 Integration** — Battle-tested DeFi protocol for yield
-- ⛓️ **BSC Native** — Low fees, fast transactions
+- ⛓️ **Base Native** — Low fees, fast transactions
 
 ---
 

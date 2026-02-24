@@ -15,16 +15,16 @@
 │           │                              │                   │
 │           ▼                              ▼                   │
 │  ┌─────────────────────────────────────────────────────────┐│
-│  │                    BSC Mainnet                          ││
+│  │                    Base Mainnet                         ││
 │  │  ┌──────────────────┐  ┌──────────────────────────────┐ ││
 │  │  │ ZKTLSWalletFactory│  │      Primus Verifier         │ ││
-│  │  │  0xB471fb197...   │  │   0xBc074EbE6D39A97...       │ ││
+│  │  │  0x0fb35B2102...  │  │   0xCE7cefB3B5A7eB44...      │ ││
 │  │  └────────┬─────────┘  └──────────────────────────────┘ ││
 │  │           │                                              ││
 │  │           ▼                                              ││
 │  │  ┌──────────────────┐  ┌──────────────────────────────┐ ││
 │  │  │   ZKTLSWallet    │  │         Aave V3 Pool         │ ││
-│  │  │  (per user)      │──│    0x6807dc923806fE8Fd...    │ ││
+│  │  │  (per user)      │──│    0xA238Dd80C259a72e...     │ ││
 │  │  └──────────────────┘  └──────────────────────────────┘ ││
 │  └─────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────┘
@@ -59,7 +59,7 @@
 
 ### Prerequisites
 - Node.js 18+
-- MetaMask with BNB for gas
+- MetaMask with ETH for gas
 - [Primus Extension](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe)
 
 ### Local Development
@@ -91,15 +91,15 @@ EMAIL_PASS=your-16-char-app-password
 
 ### Step 1: Setup
 1. Install [Primus Extension](https://chromewebstore.google.com/detail/primus/oeiomhmbaapihbilkfkhmlajkeegnjhe)
-2. Have MetaMask connected to BSC Mainnet
-3. Have some BNB for gas and USDC for testing
+2. Have MetaMask connected to Base Mainnet
+3. Have some ETH for gas and USDC for testing
 
 ### Step 2: Create Wallet
 1. Click "Start with Gmail"
 2. Primus extension opens Google login
 3. Complete OAuth flow
 4. zkTLS proof is generated and verified
-5. Your wallet is created on BSC!
+5. Your wallet is created on Base!
 
 ### Step 3: Deposit
 1. Click "Deposit"
@@ -167,7 +167,7 @@ vercel deploy
 ```bash
 cd contracts
 ~/.foundry/bin/forge script script/Deploy.s.sol:DeployScript \
-  --rpc-url bnb_mainnet \
+  --rpc-url base_mainnet \
   --broadcast \
   --verify
 ```
@@ -186,8 +186,8 @@ cd contracts
    - Try clearing Primus extension cache
 
 3. **"Transaction failed"**
-   - Check you have enough BNB for gas
+   - Check you have enough ETH for gas
    - Check USDC approval was successful
 
 4. **"Wrong network"**
-   - Switch MetaMask to BSC Mainnet (Chain ID: 56)
+   - Switch MetaMask to Base Mainnet (Chain ID: 8453)

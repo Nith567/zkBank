@@ -8,10 +8,10 @@ contract DeployScript is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         
-        // BNB Chain MAINNET addresses
-        address primusVerifier = 0xF24199D5D431bE869af3Da61162CbBb58C389324;
-        // Aave V3 Pool on BNB Chain MAINNET
-        address aavePool = 0x6807dc923806fE8Fd134338EABCA509979a7e0cB;
+        // BASE Chain MAINNET addresses
+        address primusVerifier = 0xCE7cefB3B5A7eB44B59F60327A53c9Ce53B0afdE;
+        // Aave V3 Pool on BASE Chain MAINNET
+        address aavePool = 0xA238Dd80C259a72e81d7e4664a9801593F98d1c5;
         
         vm.startBroadcast(deployerPrivateKey);
         

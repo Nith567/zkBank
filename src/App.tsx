@@ -162,14 +162,14 @@ const ERC20Abi = [
   }
 ];
 
-// BSC Mainnet USDC address
-const USDC_ADDRESS = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d";
+// Base Mainnet USDC address (6 decimals on Base)
+const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 
-// Factory contract address (for send to email)
-const FACTORY_ADDRESS = "0xB471fb197A092Fd8B580862775ff49f063d02F7e";
+// Factory contract address (for send to email) - Deployed on Base Mainnet
+const FACTORY_ADDRESS = "0x0fb35B2102821ebC9dD5eb898b634080D01a905A";
 
-// BSC Mainnet RPC endpoint
-const BSC_MAINNET_RPC = "https://bnb-mainnet.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj";
+// Base Mainnet RPC endpoint
+const BASE_MAINNET_RPC = "https://base-mainnet.g.alchemy.com/v2/POcytJtZjkzStgaMseE9BxpHexaC4Tfj";
 
 // Factory ABI for send-to-email feature
 const FactoryAbi = [
@@ -278,13 +278,13 @@ function App() {
     if (!email) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
+      const provider = new ethers.providers.JsonRpcProvider(BASE_MAINNET_RPC);
       const factoryContract = new ethers.Contract(FACTORY_ADDRESS, FactoryAbi, provider);
       
       const emailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(email));
       const pending = await factoryContract.getPendingAmount(emailHash, USDC_ADDRESS);
       
-      const formattedAmount = ethers.utils.formatUnits(pending, 18);
+      const formattedAmount = ethers.utils.formatUnits(pending, 6);
       setPendingAmount(formattedAmount);
       
       if (parseFloat(formattedAmount) > 0) {
@@ -300,7 +300,7 @@ function App() {
     
     setIsLoadingBalance(true);
     try {
-      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
+      const provider = new ethers.providers.JsonRpcProvider(BASE_MAINNET_RPC);
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, provider);
       const balance = await walletContract.getAaveBalance();
       // Aave returns USD value with 8 decimals, format and keep 3 decimal places
@@ -319,12 +319,12 @@ function App() {
     if (!walletAddress) return;
     
     try {
-      const provider = new ethers.providers.JsonRpcProvider(BSC_MAINNET_RPC);
+      const provider = new ethers.providers.JsonRpcProvider(BASE_MAINNET_RPC);
       
       // USDC balance  
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, provider);
       const usdcBal = await usdcContract.balanceOf(walletAddress);
-      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 18)).toFixed(2));
+      setWalletUsdcBalance(parseFloat(ethers.utils.formatUnits(usdcBal, 6)).toFixed(2));
     } catch (e) {
       console.error("Failed to fetch wallet balances:", e);
     }
@@ -385,7 +385,7 @@ function App() {
         errorMessage = "You cancelled the request. Click 'Start with Gmail' to try again.";
         errorType = "warning";
       } else if (e.code === 4902) {
-        errorMessage = "Please add BSC network to your wallet and try again.";
+        errorMessage = "Please add Base network to your wallet and try again.";
         errorType = "warning";
       } else if (e.message?.includes("MetaMask not installed")) {
         errorMessage = "MetaMask is not installed. Please install MetaMask to continue.";
@@ -422,11 +422,11 @@ function App() {
       
       // Get user's USDC balance
       const balance = await usdcContract.balanceOf(userAddress);
-      setUsdcBalance(ethers.utils.formatUnits(balance, 18)); // USDC on BSC has 18 decimals
+      setUsdcBalance(ethers.utils.formatUnits(balance, 6)); // USDC on Base has 6 decimals
       
       // Get current allowance
       const currentAllowance = await usdcContract.allowance(userAddress, walletAddress);
-      setAllowance(ethers.utils.formatUnits(currentAllowance, 18));
+      setAllowance(ethers.utils.formatUnits(currentAllowance, 6));
       
     } catch (e) {
       console.error("Failed to fetch USDC info:", e);
@@ -445,7 +445,7 @@ function App() {
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, signer);
       
       // Approve the zkTLS wallet to spend USDC
-      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 18);
+      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 6);
       const tx = await usdcContract.approve(walletAddress, amountInWei);
       
       message.loading("Approving USDC...", 0);
@@ -492,7 +492,7 @@ function App() {
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, signer);
       
       // Convert amount to USDC decimals (18 on BSC)
-      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 18);
+      const amountInWei = ethers.utils.parseUnits(depositAmount.toString(), 6);
       
       // Call deposit function
       console.log("📤 Calling deposit on wallet contract...");
@@ -554,7 +554,7 @@ function App() {
       const walletContract = new ethers.Contract(walletAddress, ZkTLSWalletAbi, signer);
       
       // Convert amount to USDC decimals (18 on BSC)
-      const amountInWei = ethers.utils.parseUnits(withdrawAmount.toString(), 18);
+      const amountInWei = ethers.utils.parseUnits(withdrawAmount.toString(), 6);
       
       // Call withdraw function
       console.log("📤 Calling withdraw on wallet contract...");
@@ -608,11 +608,11 @@ function App() {
       
       // Get user's USDC balance
       const balance = await usdcContract.balanceOf(userAddress);
-      setUsdcBalance(ethers.utils.formatUnits(balance, 18));
+      setUsdcBalance(ethers.utils.formatUnits(balance, 6));
       
       // Get allowance for factory contract
       const currentAllowance = await usdcContract.allowance(userAddress, FACTORY_ADDRESS);
-      setSendAllowance(ethers.utils.formatUnits(currentAllowance, 18));
+      setSendAllowance(ethers.utils.formatUnits(currentAllowance, 6));
       
     } catch (e) {
       console.error("Failed to fetch USDC info for send:", e);
@@ -630,7 +630,7 @@ function App() {
       
       const usdcContract = new ethers.Contract(USDC_ADDRESS, ERC20Abi, signer);
       
-      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 18);
+      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 6);
       const tx = await usdcContract.approve(FACTORY_ADDRESS, amountInWei);
       
       message.loading("Approving USDC...", 0);
@@ -668,7 +668,7 @@ function App() {
       
       // Hash the recipient email
       const recipientEmailHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(recipientEmail));
-      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 18);
+      const amountInWei = ethers.utils.parseUnits(sendAmount.toString(), 6);
       
       message.loading(`Sending ${sendAmount} USDC to ${recipientEmail}...`, 0);
       
@@ -1028,9 +1028,9 @@ function App() {
                 </Button>
                 <Button 
                   type="link"
-                  onClick={() => window.open(`https://bscscan.com/address/${walletAddress}`, "_blank")}
+                  onClick={() => window.open(`https://basescan.org/address/${walletAddress}`, "_blank")}
                 >
-                  View on BscScan ↗
+                  View on BaseScan ↗
                 </Button>
                 <Button 
                   type="default"

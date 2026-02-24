@@ -46,7 +46,7 @@ export function formatAttestationForContract(attestation: any) {
 // Get fresh attestation for deposit/withdraw operations
 export async function getFreshAttestation(): Promise<{ attestation: any; formattedAttestation: any; email: string }> {
   const TEMPLATE_ID = "3bad8a55-4415-4bec-9b47-a4c7bbe93518";
-  const BSC_MAINNET_CHAIN_ID = "0x38"; // Chain ID 56 in hex
+  const BASE_MAINNET_CHAIN_ID = "0x2105"; // Chain ID 8453 in hex
 
   if (!window.ethereum) {
     throw new Error("MetaMask not installed");
@@ -55,14 +55,14 @@ export async function getFreshAttestation(): Promise<{ attestation: any; formatt
   let provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
-  // Switch to BSC Mainnet if needed
+  // Switch to Base Mainnet if needed
   const network = await provider.getNetwork();
-  if (network.chainId !== 56) {
-    console.log("📡 Switching to BSC Mainnet...");
+  if (network.chainId !== 8453) {
+    console.log("📡 Switching to Base Mainnet...");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: BSC_MAINNET_CHAIN_ID }],
+        params: [{ chainId: BASE_MAINNET_CHAIN_ID }],
       });
       await new Promise(resolve => setTimeout(resolve, 500));
       provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -71,11 +71,11 @@ export async function getFreshAttestation(): Promise<{ attestation: any; formatt
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [{
-            chainId: BSC_MAINNET_CHAIN_ID,
-            chainName: "BNB Smart Chain",
-            nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
-            rpcUrls: ["https://bsc-dataseed.binance.org/"],
-            blockExplorerUrls: ["https://bscscan.com"],
+            chainId: BASE_MAINNET_CHAIN_ID,
+            chainName: "Base",
+            nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+            rpcUrls: ["https://mainnet.base.org"],
+            blockExplorerUrls: ["https://basescan.org"],
           }],
         });
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -280,14 +280,14 @@ const AttestorTestAbi = [
   }
 ];
 
-// Your deployed ZkTLSWalletFactory contract address
-const FACTORY_ADDRESS = "0xB471fb197A092Fd8B580862775ff49f063d02F7e";
+// Your deployed ZkTLSWalletFactory contract address on Base Mainnet
+const FACTORY_ADDRESS = "0x0fb35B2102821ebC9dD5eb898b634080D01a905A";
 
 export async function primusProofTest(
   callback: (attestation: string, walletAddress: string, email: string) => void
 ) {
   const TEMPLATE_ID = "3bad8a55-4415-4bec-9b47-a4c7bbe93518";
-  const BSC_MAINNET_CHAIN_ID = "0x38"; // Chain ID 56 in hex
+  const BASE_MAINNET_CHAIN_ID = "0x2105"; // Chain ID 8453 in hex
 
   // Connect MetaMask
   if (!window.ethereum) {
@@ -297,14 +297,14 @@ export async function primusProofTest(
   let provider = new ethers.providers.Web3Provider(window.ethereum);
   await provider.send("eth_requestAccounts", []);
 
-  // Switch to BSC Mainnet if needed
+  // Switch to Base Mainnet if needed
   const network = await provider.getNetwork();
-  if (network.chainId !== 56) {
-    console.log("📡 Switching to BSC Mainnet...");
+  if (network.chainId !== 8453) {
+    console.log("📡 Switching to Base Mainnet...");
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: BSC_MAINNET_CHAIN_ID }],
+        params: [{ chainId: BASE_MAINNET_CHAIN_ID }],
       });
       await new Promise(resolve => setTimeout(resolve, 500));
       provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -313,11 +313,11 @@ export async function primusProofTest(
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [{
-            chainId: BSC_MAINNET_CHAIN_ID,
-            chainName: "BNB Smart Chain",
-            nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
-            rpcUrls: ["https://bsc-dataseed.binance.org/"],
-            blockExplorerUrls: ["https://bscscan.com"],
+            chainId: BASE_MAINNET_CHAIN_ID,
+            chainName: "Base",
+            nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+            rpcUrls: ["https://mainnet.base.org"],
+            blockExplorerUrls: ["https://basescan.org"],
           }],
         });
         await new Promise(resolve => setTimeout(resolve, 500));
