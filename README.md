@@ -189,38 +189,28 @@ npm run dev
 
 ---
 
-## 🏆 Hackathon Track: DeFi
-
-### 💰 Why DeFi Track?
-
-zkBank is a **practical DeFi tool built on Base** that solves real problems:
-
-| Criteria | How zkBank Delivers |
-|----------|---------------------|
-| **Yield Dashboard** | Auto-deposit to Aave V3 on Base, track earnings in real-time |
-| **Usable** | Login with Gmail — no seed phrases, no complex setup |
-| **Reproducible** | Open-source smart contracts, deployed on Base Mainnet |
-| **No Token Required** | Uses existing USDC, no new token needed |
-
-### Why Base?
-- ⚡ **Fast & Cheap** — Sub-second blocks, minimal gas fees
-- 🏦 **DeFi Ecosystem** — Aave V3, Venus, PancakeSwap integration ready
-- 🌍 **Mass Adoption** — One of the most used chains globally
-- 🔒 **Battle-tested** — Secure, reliable infrastructure
-
-### Key DeFi Features:
-- 📈 **Auto-Yield Generation** — All deposits automatically earn Aave V3 interest
-- 💸 **Email-Based Payments** — Send USDC to any email address
-- 🔐 **Self-Custodial Wallets** — Users control their own smart contract wallet
-- 🔗 **Aave V3 Integration** — Battle-tested DeFi protocol for yield
-- ⛓️ **Base Native** — Low fees, fast transactions
 
 ---
 
 ## 🔮 Future Roadmap
 
-- [ ] Recurring payments / subscriptions
-- [ ] Social recovery using trusted emails
+### Week 1-2: Core Enhancements 🛠️
+- [ ] **Recurring Payments** — Schedule automatic payments to any email
+- [ ] **Social Recovery** — Add trusted emails to help recover your wallet
+- [ ] **Payment History** — Full transaction history with filters & export
+
+### Week 2-3: Growth Features 🚀
+- [ ] **Payment Links** — Generate shareable `zkbank.io/pay/you` links
+- [ ] **Payment Requests** — Request money from any email address
+- [ ] **Group Payments** — Split bills among multiple emails
+- [ ] **Mobile PWA** — Installable app experience for iOS/Android
+
+### Week 3-4: DeFi Power 💎
+- [ ] **Multi-Token Support** — USDT, DAI, ETH and more
+- [ ] **Yield Dashboard** — Track APY, earnings history & projections
+- [ ] **In-App Token Swaps** — Swap tokens without leaving zkBank
+- [ ] **Savings Goals** — Create goals like "Vacation Fund" 🏖️
+
 
 ---
 
